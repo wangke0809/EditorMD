@@ -20,6 +20,7 @@ class EditorMD_Plugin implements Typecho_Plugin_Interface
     public static function activate()
     {
         Typecho_Plugin::factory('admin/write-post.php')->richEditor = array('EditorMD_Plugin', 'Editor');
+        Typecho_Plugin::factory('admin/write-page.php')->richEditor = array('EditorMD_Plugin', 'Editor');
         Typecho_Plugin::factory('Widget_Archive')->footer = array('EditorMD_Plugin','footerJS');
     }
     
@@ -99,7 +100,7 @@ class EditorMD_Plugin implements Typecho_Plugin_Interface
         <script type="text/javascript" src="<?php echo $jsUrl; ?>"></script>
         <script>
             emojify.setConfig({
-                img_dir: 'http://cdn.staticfile.org/emoji-cheat-sheet/1.0.0',
+                img_dir: 'https:' == document.location.protocol ? "https://staticfile.qnssl.com/emoji-cheat-sheet/1.0.0" : "http://cdn.staticfile.org/emoji-cheat-sheet/1.0.0",
                 blacklist: {
                     'ids': [],
                     'classes': ['no-emojify'],
