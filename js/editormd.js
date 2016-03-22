@@ -3572,13 +3572,13 @@
             var isToC           = (settings.tocm) ? /^(\[TOC\]|\[TOCM\])$/.test(text) : /^\[TOC\]$/.test(text);
             var isToCMenu       = /^\[TOCM\]$/.test(text);
             
-            if (!isTeXLine && isTeXInline) 
+            if (!isTeXLine && isTeXInline)
             {
                 text = text.replace(/(\$\$([^\$]*)\$\$)+/g, function($1, $2) {
                     return "<span class=\"" + editormd.classNames.tex + "\">" + $2.replace(/\$/g, "") + "</span>";
                 });
-            } 
-            else 
+            }
+            else
             {
                 text = (isTeXLine) ? text.replace(/\$/g, "") : text;
             }
@@ -4149,8 +4149,8 @@
     // 使用国外的CDN，加载速度有时会很慢，或者自定义URL
     // You can custom KaTeX load url.
     editormd.katexURL  = {
-        css : "//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min",
-        js  : "//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min"
+        css : 'https:' == document.location.protocol ?"https://staticfile.qnssl.com/KaTeX/0.3.0/katex.min":"http://cdn.staticfile.org/KaTeX/0.3.0/katex.min",//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min
+        js  : 'https:' == document.location.protocol ?"https://staticfile.qnssl.com/KaTeX/0.3.0/katex.min":"http://cdn.staticfile.org/KaTeX/0.3.0/katex.min" //cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min
     };
     
     editormd.kaTeXLoaded = false;
