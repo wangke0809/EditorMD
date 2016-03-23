@@ -101,7 +101,7 @@ class EditorMD_Plugin implements Typecho_Plugin_Interface
                 flowChart: <?php echo $editormd->isActive?'true':'false'; ?>,  // 默认不解析
                 sequenceDiagram: <?php echo $editormd->isActive?'true':'false'; ?>,
                 toolbarIcons : function() {
-                    return ["undo", "redo", "|", "bold", "del", "italic", "quote", "h1", "h2", "h3", "h4", "|", "list-ul", "list-ol", "hr", "|", "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime", "emoji", "html-entities", "more", "|", "goto-line", "watch", "preview", "fullscreen", "clear", "clear", "|", "help", "info"]
+                    return ["undo", "redo", "|", "bold", "del", "italic", "quote", "h1", "h2", "h3", "h4", "|", "list-ul", "list-ol", "hr", "|", "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime"<?php echo $editormd->emoji?', "emoji"':''; ?>, "html-entities", "more", "|", "goto-line", "watch", "preview", "fullscreen", "clear", "|", "help", "info"]
                 },
                 toolbarIconsClass : {
                     more : "fa-newspaper-o"  // 指定一个FontAawsome的图标类
