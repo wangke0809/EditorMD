@@ -5,7 +5,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  * 
  * @package EditorMD
  * @author DT27
- * @version 1.1.0
+ * @version 1.1.1
  * @link https://dt27.org
  */
 class EditorMD_Plugin implements Typecho_Plugin_Interface
@@ -134,21 +134,26 @@ class EditorMD_Plugin implements Typecho_Plugin_Interface
     {
         $options = Helper::options();
         $pluginUrl = $options->pluginUrl.'/EditorMD';
-
-        $editormd = Typecho_Widget::widget('Widget_Options')->plugin('EditorMD');
-        if($editormd->isActive == 1 && $conent->isMarkdown) {
-        ?>
+    $editormd = Typecho_Widget::widget('Widget_Options')->plugin('EditorMD');
+if($editormd->isActive == 1 && $conent->isMarkdown) {
+?>
 <link rel="stylesheet" href="<?php echo $pluginUrl; ?>/css/editormd.preview.min.css"/>
-        <?php
-        }
-        if($editormd->emoji){
-        ?>
+<?php
+}
+if($editormd->emoji){
+?>
 <link rel="stylesheet" href="<?php echo $pluginUrl; ?>/css/emojify.min.css" />
-            <?php } ?>
-<script src="<?php echo $pluginUrl; ?>/lib/jquery.min.js"></script>
-        <?php
-        if($editormd->isActive == 1 && $conent->isMarkdown) {
-        ?>
+<?php
+}
+if($editormd->emoji || ($editormd->isActive == 1 && $conent->isMarkdown)){
+?>
+<script type="text/javascript">
+    window.jQuery || document.write(unescape('%3Cscript%20type%3D%22text/javascript%22%20src%3D%22<?php echo $pluginUrl; ?>/lib/jquery.min.js%22%3E%3C/script%3E'));
+</script>
+<?php
+}
+if($editormd->isActive == 1 && $conent->isMarkdown) {
+?>
 <script src="<?php echo $pluginUrl; ?>/lib/marked.min.js"></script>
 <script src="<?php echo $pluginUrl; ?>/lib/prettify.min.js"></script>
 <script src="<?php echo $pluginUrl; ?>/lib/raphael.min.js"></script>
@@ -159,18 +164,20 @@ class EditorMD_Plugin implements Typecho_Plugin_Interface
 <script src="<?php echo $pluginUrl; ?>/js/editormd.min.js"></script>
 <?php
 }
-        if($editormd->emoji){
+if($editormd->emoji){
 ?>
 <script src="<?php echo $pluginUrl; ?>/js/emojify.min.js"></script>
-            <?php } ?>
+<?php
+}
+if($editormd->emoji||($editormd->isActive == 1 && $conent->isMarkdown)){
+?>
 <script type="text/javascript">
 $(function() {
-    <?php
-    if($editormd->isActive == 1 && $conent->isMarkdown) {
-    ?>
+<?php
+if($editormd->isActive == 1 && $conent->isMarkdown) {
+?>
     var markdowns = document.getElementsByClassName("md_content");
     for(var i=1; i<=markdowns.length; i++) {
-
         var markdown = $('#md_content_'+ i + " #append-test").text();
         //$('#md_content_'+i).text('');
         var testEditormdView;
@@ -186,12 +193,11 @@ $(function() {
             flowChart: <?php echo $editormd->isActive?'true':'false'; ?>,
             sequenceDiagram: <?php echo $editormd->isActive?'true':'false'; ?>,
         });
-
     }
-    <?php
-    }
-    if($editormd->emoji){
-    ?>
+<?php
+}
+if($editormd->emoji){
+?>
     emojify.setConfig({
         img_dir: 'https:' == document.location.protocol ? "https://staticfile.qnssl.com/emoji-cheat-sheet/1.0.0" : "http://cdn.staticfile.org/emoji-cheat-sheet/1.0.0",
         blacklist: {
@@ -201,10 +207,11 @@ $(function() {
         },
     });
     emojify.run();
-    <?php } ?>
+<?php } ?>
 });
 </script>
-        <?php
+<?php
+    }
     }
 
     public static function content($text, $conent){

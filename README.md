@@ -15,6 +15,7 @@ _<sup>*</sup>需要在插件设置中手动启用，启用后将使用 [marked.j
 _<sup>*</sup>语法完整示例：[https://pandao.github.io/editor.md/examples/full.html](https://pandao.github.io/editor.md/examples/full.html)_
 
 ## Typecho 插件安装及使用
+0. **插件更新升级时，请先禁用插件后再上传**
 1. [点此](https://github.com/DT27/EditorMD/archive/master.zip)下载插件
 2. 将下载的文件解压，文件夹重命名为`EditorMD`，上传到Typecho`usr/plugins/`目录下
 3. 登陆后台，在`控制台`下拉菜单中点击`插件`进入`插件管理`
