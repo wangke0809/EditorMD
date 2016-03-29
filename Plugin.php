@@ -124,6 +124,19 @@ class EditorMD_Plugin implements Typecho_Plugin_Interface
                     }
                 },
             });
+
+            // 兼容原附件图片插入 By Markxuxiao
+            $(function(){
+                $("#tab-files").on("click","#file-list>li",function(){
+                    var url = $(this).data("url");
+                    var img = $(this).data("image");
+                    if (img==1) {
+                        postEditormd.insertValue("![]("+url+")");
+                    } else{
+                        postEditormd.insertValue(url);
+                    };
+                })
+            });
         </script>
         <?php
     }
