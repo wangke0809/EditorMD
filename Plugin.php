@@ -86,56 +86,52 @@ class EditorMD_Plugin implements Typecho_Plugin_Interface
         </script>
         <script type="text/javascript" src="<?php echo $jsUrl; ?>"></script>
         <script>
-            $('#text').wrap("<div id='text-editormd'></div>");
-            postEditormd = editormd("text-editormd", {
-                width: "100%",
-                height: 640,
-                path : '<?php echo $options->pluginUrl ?>/EditorMD/lib/',
-                toolbarAutoFixed : false,
-                htmlDecode: true,
-                emoji: <?php echo $editormd->emoji?'true':'false'; ?>,
-                tex: <?php echo $editormd->isActive?'true':'false'; ?>,
-                toc: <?php echo $editormd->isActive?'true':'false'; ?>,
-                tocm: <?php echo $editormd->isActive?'true':'false'; ?>,    // Using [TOCM]
-                taskList: <?php echo $editormd->isActive?'true':'false'; ?>,
-                flowChart: <?php echo $editormd->isActive?'true':'false'; ?>,  // 默认不解析
-                sequenceDiagram: <?php echo $editormd->isActive?'true':'false'; ?>,
-                toolbarIcons : function() {
-                    return ["undo", "redo", "|", "bold", "del", "italic", "quote", "h1", "h2", "h3", "h4", "|", "list-ul", "list-ol", "hr", "|", "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime"<?php echo $editormd->emoji?', "emoji"':''; ?>, "html-entities", "more", "|", "goto-line", "watch", "preview", "fullscreen", "clear", "|", "help", "info"]
-                },
-                toolbarIconsClass : {
-                    more : "fa-newspaper-o"  // 指定一个FontAawsome的图标类
-                },
-                // 自定义工具栏按钮的事件处理
-                toolbarHandlers : {
-                    /**
-                     * @param {Object}      cm         CodeMirror对象
-                     * @param {Object}      icon       图标按钮jQuery元素对象
-                     * @param {Object}      cursor     CodeMirror的光标对象，可获取光标所在行和位置
-                     * @param {String}      selection  编辑器选中的文本
-                     */
-                    more: function (cm, icon, cursor, selection) {
-                        cm.replaceSelection("<!--more-->");
-                    }
-                },
-                lang : {
-                    toolbar : {
-                        more : "插入摘要分隔符"
-                    }
-                },
-            });
+            $(document).ready(function() {
+                $('#text').wrap("<div id='text-editormd'></div>");
+                postEditormd = editormd("text-editormd", {
+                    width: "100%",
+                    height: 640,
+                    path: '<?php echo $options->pluginUrl ?>/EditorMD/lib/',
+                    toolbarAutoFixed: false,
+                    htmlDecode: true,
+                    emoji: <?php echo $editormd->emoji ? 'true' : 'false'; ?>,
+                    tex: <?php echo $editormd->isActive ? 'true' : 'false'; ?>,
+                    toc: <?php echo $editormd->isActive ? 'true' : 'false'; ?>,
+                    tocm: <?php echo $editormd->isActive ? 'true' : 'false'; ?>,    // Using [TOCM]
+                    taskList: <?php echo $editormd->isActive ? 'true' : 'false'; ?>,
+                    flowChart: <?php echo $editormd->isActive ? 'true' : 'false'; ?>,  // 默认不解析
+                    sequenceDiagram: <?php echo $editormd->isActive ? 'true' : 'false'; ?>,
+                    toolbarIcons: function () {
+                        return ["undo", "redo", "|", "bold", "del", "italic", "quote", "h1", "h2", "h3", "h4", "|", "list-ul", "list-ol", "hr", "|", "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime"<?php echo $editormd->emoji ? ', "emoji"' : ''; ?>, "html-entities", "more", "|", "goto-line", "watch", "preview", "fullscreen", "clear", "|", "help", "info"]
+                    },
+                    toolbarIconsClass: {
+                        more: "fa-newspaper-o"  // 指定一个FontAawsome的图标类
+                    },
+                    // 自定义工具栏按钮的事件处理
+                    toolbarHandlers: {
+                        /**
+                         * @param {Object}      cm         CodeMirror对象
+                         * @param {Object}      icon       图标按钮jQuery元素对象
+                         * @param {Object}      cursor     CodeMirror的光标对象，可获取光标所在行和位置
+                         * @param {String}      selection  编辑器选中的文本
+                         */
+                        more: function (cm, icon, cursor, selection) {
+                            cm.replaceSelection("<!--more-->");
+                        }
+                    },
+                    lang: {
+                        toolbar: {
+                            more: "插入摘要分隔符"
+                        }
+                    },
+                });
 
-            // 兼容原附件图片插入 By Markxuxiao
-            $(function(){
-                $("#tab-files").on("click","#file-list>li",function(){
-                    var url = $(this).data("url");
-                    var img = $(this).data("image");
-                    if (img==1) {
-                        postEditormd.insertValue("![]("+url+")");
-                    } else{
-                        postEditormd.insertValue(url);
-                    };
-                })
+                // 优化图片及文件附件插入 Thanks to Markxuxiao
+                Typecho.insertFileToEditor = function (file, url, isImage) {
+                    html = isImage ? '![' + file + '](' + url + ')'
+                        : '[' + file + '](' + url + ')';
+                    postEditormd.insertValue(html);
+                };
             });
         </script>
         <?php
