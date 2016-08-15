@@ -8,11 +8,11 @@
 - 支持实时预览、代码/表格插入、代码折叠等功能；
 - 支持 [Emoji 表情](http://www.emoji-cheat-sheet.com/)
 - 支持 [ToC（Table of Contents）](https://pandao.github.io/editor.md/examples/toc.html)、[Github Task lists](https://pandao.github.io/editor.md/examples/task-lists.html) 等 Markdown 扩展语法 <sup>*</sup>
-- 支持 TeX 科学公式（基于 [KaTeX](http://khan.github.io/KaTeX/)）、流程图 [Flowchart](https://pandao.github.io/editor.md/examples/flowchart.html) 和 时序图 [Sequence Diagram](https://pandao.github.io/editor.md/examples/sequence-diagram.html) <sup>*</sup>
+- 支持 TeX 科学公式（基于 [KaTeX](http://khan.github.io/KaTeX/)）、流程图 [Flowchart](https://pandao.github.io/editor.md/examples/flowchart.html) 和 时序图 [Sequence Diagram](https://pandao.github.io/editor.md/examples/sequence-diagram.html) <sup>**</sup>
 
-_<sup>*</sup>需要在插件设置中手动启用，启用后将使用 [marked.js](https://github.com/chjj/marked) 接管前台 Markdown 解析_
+_<sup>*</sup>需要在插件设置中手动启用，启用后将使用 [marked.js](https://github.com/chjj/marked) 接管前台 Markdown 解析，但接管前台解析后，会导致与文章内容有关的插件失效。_
 
-_<sup>*</sup>语法完整示例：[https://pandao.github.io/editor.md/examples/full.html](https://pandao.github.io/editor.md/examples/full.html)_
+_<sup>**</sup>语法完整示例：[https://pandao.github.io/editor.md/examples/full.html](https://pandao.github.io/editor.md/examples/full.html)_
 
 ## Typecho 插件安装及使用
 0. **插件更新升级时，请先禁用插件后再上传**
