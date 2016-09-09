@@ -5,7 +5,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  * 
  * @package EditorMD
  * @author DT27
- * @version 1.1.1
+ * @version 1.2.0
  * @link https://dt27.org
  */
 class EditorMD_Plugin implements Typecho_Plugin_Interface
@@ -24,6 +24,7 @@ class EditorMD_Plugin implements Typecho_Plugin_Interface
         Typecho_Plugin::factory('admin/write-page.php')->richEditor = array('EditorMD_Plugin', 'Editor');
 
         Typecho_Plugin::factory('Widget_Abstract_Contents')->content = array('EditorMD_Plugin', 'content');
+        Typecho_Plugin::factory('Widget_Abstract_Contents')->excerpt = array('EditorMD_Plugin', 'content');
         Typecho_Plugin::factory('Widget_Archive')->footer = array('EditorMD_Plugin','footerJS');
     }
     
