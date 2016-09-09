@@ -186,11 +186,11 @@ $(function() {
 if($editormd->isActive == 1 && $conent->isMarkdown) {
 ?>
     var markdowns = document.getElementsByClassName("md_content");
-    for(var i=1; i<=markdowns.length; i++) {
-        var markdown = $('#md_content_'+ i + " #append-test").text();
+    $(markdowns).each(function(){
+        var markdown = $(this).children("#append-test").text();
         //$('#md_content_'+i).text('');
         var testEditormdView;
-        testEditormdView = editormd.markdownToHTML("md_content_"+i, {
+        testEditormdView = editormd.markdownToHTML($(this).attr("id"), {
             markdown: markdown,//+ "\r\n" + $("#append-test").text(),
             toolbarAutoFixed : false,
             htmlDecode: true,
@@ -202,7 +202,7 @@ if($editormd->isActive == 1 && $conent->isMarkdown) {
             flowChart: <?php echo $editormd->isActive?'true':'false'; ?>,
             sequenceDiagram: <?php echo $editormd->isActive?'true':'false'; ?>,
         });
-    }
+    });
 <?php
 }
 if($editormd->emoji){
