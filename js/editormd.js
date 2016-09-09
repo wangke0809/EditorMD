@@ -1461,7 +1461,7 @@
             
             if (settings.previewCodeHighlight) 
             {
-                previewContainer.find("pre").addClass("prettyprint linenums");
+                previewContainer.find("pre:not(.aplayer-lrc-content)").addClass("prettyprint linenums");
                 
                 if (typeof prettyPrint !== "undefined")
                 {                    
@@ -3965,7 +3965,7 @@
             
         if (settings.previewCodeHighlight) 
         {
-            div.find("pre").addClass("prettyprint linenums");
+            div.find("pre:not(.aplayer-lrc-content)").addClass("prettyprint linenums");
             prettyPrint();
         }
         
