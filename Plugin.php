@@ -283,7 +283,7 @@ if($editormd->emoji){
         $text = $conent->isMarkdown ? ($editormd->isActive == 1?$text:$conent->markdown($text))
             : $conent->autoP($text);
         if($editormd->isActive == 1 && $conent->isMarkdown)
-            return '<div id="md_content_'.self::$count.'" class="md_content" style="background-image:url('.Helper::options()->pluginUrl.'/EditorMD'.'/images/loading.gif);background-position: center;background-repeat: no-repeat; min-height: 50px;"><textarea id="append-test" style="display:none;">'.$text.'</textarea></div>';
+            return '<div id="md_content_'.self::$count.'" class="md_content" style="min-height: 50px;"><textarea id="append-test" style="display:none;">'.$text.'</textarea></div>';
         else
             return $text;
     }
