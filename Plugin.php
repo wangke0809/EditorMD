@@ -140,8 +140,8 @@ class EditorMD_Plugin implements Typecho_Plugin_Interface
                             },
                             isMarkdown: function (cm, icon, cursor, selection) {
                                 if(!$("div.message.notice").html()){
-                                var isMarkdown = $('[name=markdown]').val()?1:0;
-                                if (isMarkdown) {
+                                var isMarkdown = $('[name=markdown]').val()?$('[name=markdown]').val():0;
+                                if (isMarkdown==1) {
                                     var notice = $('<div class="message notice"><?php _e('本文Markdown解析已启用！'); ?> '
                                         + '<button class="btn btn-xs no"><?php _e('禁用'); ?></button> '
                                         + '<button class="btn btn-xs primary yes"><?php _e('保持启用'); ?></button></div>')
@@ -154,6 +154,7 @@ class EditorMD_Plugin implements Typecho_Plugin_Interface
                                     $('.no', notice).click(function () {
                                         notice.remove();
                                         $("[name=markdown]").val(0);
+                                        postEditormd.unwatch();
                                     });
                                 } else {
                                     var notice = $('<div class="message notice"><?php _e('本文Markdown解析已禁用！'); ?> '
@@ -163,6 +164,7 @@ class EditorMD_Plugin implements Typecho_Plugin_Interface
 
                                     $('.yes', notice).click(function () {
                                         notice.remove();
+                                        postEditormd.watch();
                                         if(!$("[name=markdown]").val())
                                             $('<input type="hidden" name="markdown" value="1" />').appendTo('.submit');
                                         else
