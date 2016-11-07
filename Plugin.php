@@ -84,6 +84,7 @@ class EditorMD_Plugin implements Typecho_Plugin_Interface
         <link rel="stylesheet" href="<?php echo $cssUrl; ?>" />
         <script>
             var emojiPath = '<?php echo $options->pluginUrl; ?>';
+            var uploadURL = '<?php Helper::security()->index('/action/upload?cid=CID'); ?>';
         </script>
         <script type="text/javascript" src="<?php echo $jsUrl; ?>"></script>
         <script>
@@ -192,6 +193,85 @@ class EditorMD_Plugin implements Typecho_Plugin_Interface
                             : '[' + file + '](' + url + ')';
                         postEditormd.insertValue(html);
                     };
+
+                    // 支持黏贴图片直接上传
+                    $(document).on('paste', function(event) {
+                        event = event.originalEvent;
+                        var cbd = event.clipboardData;
+                        var ua = window.navigator.userAgent;
+                        if (!(event.clipboardData && event.clipboardData.items)) {
+                            return;
+                        }
+
+                        if (cbd.items && cbd.items.length === 2 && cbd.items[0].kind === "string" && cbd.items[1].kind === "file" &&
+                            cbd.types && cbd.types.length === 2 && cbd.types[0] === "text/plain" && cbd.types[1] === "Files" &&
+                            ua.match(/Macintosh/i) && Number(ua.match(/Chrome\/(\d{2})/i)[1]) < 49){
+                            return;
+                        }
+
+                        var itemLength = cbd.items.length;
+
+                        if (itemLength == 0) {
+                            return;
+                        }
+
+                        if (itemLength == 1 && cbd.items[0].kind == 'string') {
+                            return;
+                        }
+
+                        if ((itemLength == 1 && cbd.items[0].kind == 'file')
+                                || itemLength > 1
+                            ) {
+                            for (var i = 0; i < cbd.items.length; i++) {
+                                var item = cbd.items[i];
+
+                                if(item.kind == "file") {
+                                    var blob = item.getAsFile();
+                                    if (blob.size === 0) {
+                                        return;
+                                    }
+                                    var ext = 'jpg';
+                                    switch(blob.type) {
+                                        case 'image/jpeg':
+                                        case 'image/pjpeg':
+                                            ext = 'jpg';
+                                            break;
+                                        case 'image/png':
+                                            ext = 'png';
+                                            break;
+                                        case 'image/gif':
+                                            ext = 'gif';
+                                            break;
+                                    }
+                                    var formData = new FormData();
+                                    formData.append('blob', blob, Math.floor(new Date().getTime() / 1000) + '.' + ext);
+                                    var uploadingText = '![图片上传中(' + i + ')...]';
+                                    var uploadFailText = '![图片上传失败(' + i + ')]'
+                                    postEditormd.insertValue(uploadingText);
+                                    $.ajax({
+                                        method: 'post',
+                                        url: uploadURL.replace('CID', $('input[name="cid"]').val()),
+                                        data: formData,
+                                        contentType: false,
+                                        processData: false,
+                                        success: function(data) {
+                                            if (data[0]) {
+                                                postEditormd.setValue(postEditormd.getValue().replace(uploadingText, '![](' + data[0] + ')'));
+                                            } else {
+                                                postEditormd.setValue(postEditormd.getValue().replace(uploadingText, uploadFailText));
+                                            }
+                                        },
+                                        error: function() {
+                                            postEditormd.setValue(postEditormd.getValue().replace(uploadingText, uploadFailText));
+                                        }
+                                    });
+                                }
+
+                            }
+                            return false;
+                        }
+
+                    });
 
             });
         </script>
