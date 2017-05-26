@@ -218,7 +218,6 @@ class EditorMD_Plugin implements Typecho_Plugin_Interface
                         if (itemLength == 1 && cbd.items[0].kind == 'string') {
                             return;
                         }
-
                         if ((itemLength == 1 && cbd.items[0].kind == 'file')
                                 || itemLength > 1
                             ) {
@@ -266,9 +265,8 @@ class EditorMD_Plugin implements Typecho_Plugin_Interface
                                         }
                                     });
                                 }
-
                             }
-                            return false;
+
                         }
 
                     });
