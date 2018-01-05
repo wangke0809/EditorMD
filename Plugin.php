@@ -311,6 +311,7 @@ if($editormd->isActive == 1 && $conent->isMarkdown) {
 if($editormd->emoji){
 ?>
 <script src="<?php echo $pluginUrl; ?>/js/emojify.min.js"></script>
+<link rel="stylesheet" href="<?php echo $pluginUrl; ?>/css/editormd.css" />
 <?php
 }
 if($editormd->emoji||($editormd->isActive == 1 && $conent->isMarkdown)){
